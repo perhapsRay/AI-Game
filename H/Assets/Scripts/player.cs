@@ -29,7 +29,7 @@ public class player : MonoBehaviour {
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
 
-        if ((Input.GetKey("up")) && transform.position.y < 7.6)
+        if ((Input.GetKey("up")) && transform.position.y < 12.65)
         {
             transform.Translate(Vector3.up * Time.deltaTime * speed);
         }
