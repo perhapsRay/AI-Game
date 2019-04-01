@@ -15,91 +15,78 @@ public class RepeatControlData
 }
 public class movePattern : MonoBehaviour {
 
-    private RepeatControlData[] pattern1, pattern2;
+    private RepeatControlData[] pattern, pattern2;
     private int patternIndex = 0;
     private int repeatIndex = 0;
-    private float horizontalSpeed = 1.5f;
-    private float verticalSpeed = 2.5f;
-    int health = 3;
+    private float horizontalSpeed;
+    private float verticalSpeed;
+    private int health;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         // Create some control data
         RepeatControlData pdr = new RepeatControlData();
-        pdr.moveX = 1.5f;
-        pdr.repeat = 60;
+        pdr.moveX = 1f;
+        pdr.repeat = 100;
 
         RepeatControlData pdl = new RepeatControlData();
-        pdl.moveX = -1.5f;
-        pdl.repeat = 120;
+        pdl.moveX = -1f;
+        pdl.repeat = 100;
 
         // Create a pattern (or an instruction list) with the control data
-        pattern1 = new RepeatControlData[] { pdr, pdl, pdr };
-        pattern2 = new RepeatControlData[] { pdl, pdr, pdl };
+        ArrayList storage = new ArrayList();
+
+        pattern = new RepeatControlData[] { pdr, pdl, pdl, pdr };
+        pattern2 = new RepeatControlData[] { pdl, pdr };
+
+
+        if (gameObject.tag == "drone")
+        {
+            health = 1;
+            horizontalSpeed = 1f;
+            verticalSpeed = 2f;
+}
+
+        if (gameObject.tag == "small")
+        {
+            health = 2;
+            horizontalSpeed = 1f;
+            verticalSpeed = 4f;
+        }
+
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+        // Update is called once per frame
+        void Update () {
+
         Vector3 enemyPos = transform.position;
-
-
-
-        // Process the current instruction in our control data array
-
-        if (enemyPos.x < 0)
+        if (gameObject.tag == "small")
         {
-            RepeatControlData cd = pattern1[patternIndex];
+            // Process the current instruction in our control data array
+            RepeatControlData cd = pattern[patternIndex];
             float deltaX = cd.moveX * horizontalSpeed * Time.deltaTime;
             transform.position += new Vector3(deltaX, 0, 0);
-
-            if (repeatIndex >= cd.repeat)
-            {
-                patternIndex++;
-                repeatIndex = 0;
-            }
-            else
-            {
-                repeatIndex++;
-            }
-        }
-        else
-        {
-            RepeatControlData cd = pattern2[patternIndex];
-            float deltaX = cd.moveX * horizontalSpeed * Time.deltaTime;
-            transform.position += new Vector3(deltaX, 0, 0);
-
-            if (repeatIndex >= cd.repeat)
-            {
-                patternIndex++;
-                repeatIndex = 0;
-            }
-            else
-            {
-                repeatIndex++;
-            }
-        }
-        
-
-
         // Increment the patternIndex so that we move to the next piece of pattern data
-        
-
-        // Reset the patternIndex if we are at the end of the instruction array
-
-        if (enemyPos.x < 0)
-        {
-            if (patternIndex >= pattern1.Length)
+       
+            if (repeatIndex >= cd.repeat)
+            {
+                patternIndex++;
+                repeatIndex = 0;
+            }
+            else
+            {
+                repeatIndex++;
+            }
+            // Reset the patternIndex if we are at the end of the instruction array
+            if (patternIndex >= pattern.Length)
             {
                 patternIndex = 0;
             }
         }
-        else
-        {
-            if (patternIndex >= pattern2.Length)
-            {
-                patternIndex = 0;
-            }
-        }
+
+
 
         transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
     }

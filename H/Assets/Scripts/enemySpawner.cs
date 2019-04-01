@@ -5,11 +5,16 @@ using UnityEngine;
 public class enemySpawner : MonoBehaviour {
 
     public GameObject small;
+    public GameObject drone;
+    public GameObject player;
     float time;
 
     // Use this for initialization
     void Start () {
-        InvokeRepeating("SpawnEnemy", 1, 1.2f);
+        Instantiate(player.GetComponent<Rigidbody2D>(), new Vector3(0f, -6, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+
+        InvokeRepeating("SpawnDrone", 1, 1.2f);
+        InvokeRepeating("SpawnSmall", 1, 0.6f);
     }
 	
 	// Update is called once per frame
@@ -17,15 +22,24 @@ public class enemySpawner : MonoBehaviour {
         time += Time.deltaTime;
     }
 
-    void SpawnEnemy()
+    void SpawnDrone()
     {
 
-        if (time > 5 && time < 12 || time > 17 && time < 20)
+        if (time > 2 && time < 5 || time > 8 && time < 10)
         {
-            Instantiate(small.GetComponent<Rigidbody2D>(), new Vector3(-2.5f, 16, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            Instantiate(small.GetComponent<Rigidbody2D>(), new Vector3(2.5f, 16, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(drone.GetComponent<Rigidbody2D>(), new Vector3(-3f, 18, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(drone.GetComponent<Rigidbody2D>(), new Vector3(3f, 18, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(drone.GetComponent<Rigidbody2D>(), new Vector3(0f, 16, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+        }  
+    }
+
+    void SpawnSmall()
+    {
+        if (time > 15 && time< 18)
+        {
+            Instantiate(small.GetComponent<Rigidbody2D>(), new Vector3(-3f, 18, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(small.GetComponent<Rigidbody2D>(), new Vector3(3f, 18, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
         }
-        
     }
  
 }
