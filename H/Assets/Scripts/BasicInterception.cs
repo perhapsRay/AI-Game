@@ -6,8 +6,9 @@ public class BasicInterception : MonoBehaviour
 {
 
     public GameObject target;
+    public Transform targetP;
     public float speed = 3.0f;
-    public float T = 10.0f;
+    public float T = 0.01f;
 
     private Vector3 targetLastPosition;
     private Vector3 targetVelocity;
@@ -23,11 +24,14 @@ public class BasicInterception : MonoBehaviour
     void Start()
     {
         targetLastPosition = target.transform.position;
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
 
         UpdateTargetVelocity();
         CalculatePredictedPosition();
@@ -36,7 +40,7 @@ public class BasicInterception : MonoBehaviour
         Vector3 rangeToClose = predictedPosition - transform.position;
 
         // Draw this vector at the position of the enemy
-        Debug.DrawRay(transform.position, rangeToClose, Color.cyan);
+        Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.red);
 
         // Get the distance to the target
         float distance = rangeToClose.magnitude;
@@ -62,8 +66,10 @@ public class BasicInterception : MonoBehaviour
             Vector3 delta = speedDelta * normalizedRangeToClose;
 
             // Tranform our enemy in the direction of our player
-            transform.Translate(delta);
+            transform.position += delta;
+            transform.up = -(target.transform.position - transform.position);
         }
+       
 
 
     }
@@ -79,7 +85,7 @@ public class BasicInterception : MonoBehaviour
 
         if (closing == Vector3.zero)
         {
-            T = 10.0f;
+            T = 0.01f;
         }
         else
         {
@@ -115,7 +121,7 @@ public class BasicInterception : MonoBehaviour
     private void OnDrawGizmos()
     {
         // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(predictedPosition, 0.2f);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawSphere(predictedPosition, 0.2f);
     }
 }

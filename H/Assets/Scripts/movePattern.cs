@@ -44,8 +44,7 @@ public class movePattern : MonoBehaviour {
         if (gameObject.tag == "drone")
         {
             health = 1;
-            horizontalSpeed = 1f;
-            verticalSpeed = 2f;
+            verticalSpeed = 4f;
 }
 
         if (gameObject.tag == "small")
