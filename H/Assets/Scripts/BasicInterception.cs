@@ -9,6 +9,9 @@ public class BasicInterception : MonoBehaviour
     public Transform targetP;
     public float speed = 3.0f;
     public float T = 0.01f;
+    private int health;
+    public GameObject explosion;
+    public Transform body;
 
     private Vector3 targetLastPosition;
     private Vector3 targetVelocity;
@@ -23,6 +26,7 @@ public class BasicInterception : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        health = 3;
         targetLastPosition = target.transform.position;
         target = GameObject.FindGameObjectWithTag("Player");
     }
@@ -116,6 +120,21 @@ public class BasicInterception : MonoBehaviour
         // Update the last position
         targetLastPosition = targetCurrentPosition;
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet (Clone)")
+        {
+            health--;
+            Destroy(collision.gameObject);
+            if (health <= 0)
+            {
+                Instantiate(explosion, body.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                score.scoreAmount += 10;
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnDrawGizmos()

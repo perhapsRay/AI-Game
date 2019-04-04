@@ -8,11 +8,16 @@ public class player : MonoBehaviour {
     public GameObject bullet;
     float bulletSpeed = 15;
     public float timer = 0;
+    public static int health;
+
+    public AudioClip shoot;
+    public AudioSource MusicSource;
 
     // Use this for initialization
     void Start ()
     {
-
+        MusicSource.clip = shoot;
+        health = 3;
     }
 	
 	// Update is called once per frame
@@ -49,10 +54,37 @@ public class player : MonoBehaviour {
                 bulletInstance = Instantiate(bullet.GetComponent<Rigidbody2D>(), transform.position, Quaternion.Euler(new Vector3(0, 0, 1)));
                 bulletInstance.name = "Bullet(Clone)";
                 bulletInstance.velocity = transform.up * bulletSpeed;
-                timer = 0.15f;
+                MusicSource.Play();
+                if (score.scoreAmount > 100)
+                {
+                    timer = 0.10f;
+                }
+                else
+                {
+                    timer = 0.15f;
+                }
+            }
+        }
+
+        if (score.scoreAmount > 500)
+        {
+            speed = 10;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "feather" || collision.gameObject.tag == "drone" || collision.gameObject.tag == "seeker"
+             || collision.gameObject.tag == "small" || collision.gameObject.tag == "slash" || collision.gameObject.tag == "wing"
+             || collision.gameObject.tag == "boss" || collision.gameObject.tag == "boss striker")
+        {
+            health--;
+            Destroy(collision.gameObject);
+            if (health <= 0)
+            {
+                Destroy(gameObject);
             }
         }
     }
 
-   
 }

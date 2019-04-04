@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114011412554356938}
   m_Layer: 0
   m_Name: feather
-  m_TagString: Untagged
+  m_TagString: feather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  explosion: {fileID: 0}
+  body: {fileID: 0}
 --- !u!212 &212995504103180220
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -125,7 +127,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ad2094f2e6cc37b4d9be593d87c04844, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3ac98a299fa44d48965ee682e90436f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

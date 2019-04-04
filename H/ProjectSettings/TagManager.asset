@@ -7,6 +7,13 @@ TagManager:
   - Bullet (Clone)
   - small
   - drone
+  - feather
+  - seeker
+  - wing
+  - boss striker
+  - crossL
+  - crossR
+  - slash
   layers:
   - Default
   - TransparentFX
