@@ -206,6 +206,7 @@ public class angel : MonoBehaviour {
             Destroy(collision.gameObject);
             if (health <= 0)
             {
+                enemySpawner.time = 0;
                 Destroy(gameObject);
             }
         }

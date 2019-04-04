@@ -15,7 +15,7 @@ public class enemySpawner : MonoBehaviour {
     public GameObject point4;
     public GameObject cross;
     public GameObject player;
-    float time;
+    public static float time;
 
     // Use this for initialization
     void Start () {
