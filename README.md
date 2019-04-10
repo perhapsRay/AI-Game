@@ -1,6 +1,8 @@
 # AI-Game
 Gamedev assignment
+
 Jamie Ray
+
 A00252166
 
 Game genre: basic scrolling shoot’em up style game
