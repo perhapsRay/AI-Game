@@ -26,3 +26,4 @@ Boss: Has 2 “Turret” enemies. Turret enemies will act as shield while also s
 
 Boss states: Idle, attacking, defend(heal), desperate attack. 
 
+![FSM diagram](https://user-images.githubusercontent.com/47320199/55905771-9900d200-5bca-11e9-983c-0e1f4993d96f.png)
