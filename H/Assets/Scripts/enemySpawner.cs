@@ -9,6 +9,7 @@ public class enemySpawner : MonoBehaviour {
     public GameObject wing;
     public GameObject seeker;
     public GameObject boss;
+    public GameObject bossbar;
     public GameObject point1;
     public GameObject point2;
     public GameObject point3;
@@ -31,13 +32,13 @@ public class enemySpawner : MonoBehaviour {
         InvokeRepeating("SpawnBoss", 1, 5);
 
         //InvokeRepeating("SpawnSeeker", 0, 1f);
+
+        //time = 32;
     }
 	
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
-        Debug.Log(time);
-
     }
 
     void SpawnPoints()
@@ -94,11 +95,20 @@ public class enemySpawner : MonoBehaviour {
             Instantiate(wing.GetComponent<Rigidbody2D>(), new Vector3(-9, 12, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             Instantiate(wing.GetComponent<Rigidbody2D>(), new Vector3(-11, 10, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
         }
+
+        if (time > 24 && time < 27)
+        {
+            Instantiate(wing.GetComponent<Rigidbody2D>(), new Vector3(7, 14, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(wing.GetComponent<Rigidbody2D>(), new Vector3(9, 12, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(wing.GetComponent<Rigidbody2D>(), new Vector3(11, 10, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+        }
+
+
     }
 
     void SpawnSeeker()
     {
-        if (time > 20 && time < 24 || time > 30 && time < 34)
+        if (time > 20 && time < 24 || time > 30 && time < 32)
         {
             Instantiate(seeker.GetComponent<Rigidbody2D>(), new Vector3(16, 26, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             Instantiate(seeker.GetComponent<Rigidbody2D>(), new Vector3(-8, 20, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -107,9 +117,10 @@ public class enemySpawner : MonoBehaviour {
 
     void SpawnBoss()
     {
-        if (time > 35 && time < 37)
+        if (time > 33 && time < 37)
         {
             Instantiate(boss.GetComponent<Rigidbody2D>(), new Vector3(0, 16, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Instantiate(bossbar.GetComponent<Rigidbody2D>(), new Vector3(-0.4f, -5.3f, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
         }
     }
 

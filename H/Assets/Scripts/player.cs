@@ -59,6 +59,10 @@ public class player : MonoBehaviour {
                 {
                     timer = 0.10f;
                 }
+                else if(score.scoreAmount > 500)
+                {
+                    timer = 0.08f;
+                }
                 else
                 {
                     timer = 0.15f;

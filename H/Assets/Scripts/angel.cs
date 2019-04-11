@@ -1,12 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class angel : MonoBehaviour {
 
     public GameObject slash;
     public Transform body;
+    public Transform defend;
+    public GameObject shield;
     public AngelState state = AngelState.IDLE;
+    public bool shieldCreate = false;
+    public bool shieldHealth = true;
+    public GameObject explosion;
 
     [SerializeField]
     Transform[] waypoints;
@@ -14,21 +21,23 @@ public class angel : MonoBehaviour {
     [SerializeField]
     float speed = 2f;
 
+
     int waypointIndex = 0;
-    public int health;
+    public static float bosshealth = 1f;
 
 
     public enum AngelState
     {
         IDLE,
         ATTACK,
+        DEFEND,
         DESPERATE
     };
 
     // Use this for initialization
     void Start () {
         transform.position = waypoints[waypointIndex].transform.position;
-        health = 100;
+        //bosshealth = 1f;
 
         InvokeRepeating("Shoot", 1f, 1f);
     }
@@ -42,19 +51,23 @@ public class angel : MonoBehaviour {
                 ProcessIdleState();
                 CheckForTransitionFromIdle();
                 break;
-
             case AngelState.ATTACK:
                 ProcessAttackState();
                 CheckForTransitionFromAttack();
+                break;
+            case AngelState.DEFEND:
+                ProcessDefendState();
+                CheckForTransitionFromDefend();
                 break;
             case AngelState.DESPERATE:
                 ProcessDesperateState();
                 CheckForTransitionFromDesperate();
                 break;
         }
+        Debug.Log(bosshealth);
 
         //Move();
-	}
+    }
 
     void ProcessIdleState()
     {
@@ -74,7 +87,7 @@ public class angel : MonoBehaviour {
 
     void CheckForTransitionFromIdle()
     {
-        if (health < 90)
+        if (bosshealth <= .9f)
         {
             state = AngelState.ATTACK;
             ProcessAttackState();
@@ -100,10 +113,101 @@ public class angel : MonoBehaviour {
 
     void CheckForTransitionFromAttack()
     {
-        if(health < 30)
+        //if (shieldHealth == true)
+        //{
+        //    if (bosshealth < .3f)
+        //    {
+        //        state = AngelState.DEFEND;
+        //        ProcessDefendState();
+        //    }
+        //}
+        //else if (shieldHealth == false)
+        //{
+        //    if (bosshealth < .3f)
+        //    {
+        //        state = AngelState.DESPERATE;
+        //        ProcessDesperateState();
+        //    }
+        //}
+
+        if(bosshealth <= .3f)
         {
-            state = AngelState.DESPERATE;
-            ProcessDesperateState();
+            if (shieldHealth == true)
+            {
+                state = AngelState.DEFEND;
+                ProcessDefendState();
+            }
+            else if (shieldHealth == false)
+            {
+                state = AngelState.DESPERATE;
+                ProcessDesperateState();
+            }
+        }
+
+    }
+
+    void ProcessDefendState()
+    {
+
+        if (!shieldCreate)
+        {
+            var myShield = Instantiate(shield, defend.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+            myShield.transform.parent = gameObject.transform;
+            shieldCreate = true;
+        }
+
+        bosshealth += .001f;
+
+        //transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position,
+        //   speed * Time.deltaTime);
+
+        //if (transform.position == waypoints[waypointIndex].transform.position)
+        //{
+        //    waypointIndex += 1;
+        //}
+
+        //if (waypointIndex == 2)
+        //{
+        //    waypointIndex = 1;
+        //}
+
+        //if (shieldScript.shieldHP <= 0)
+        //{
+        //    shieldHealth = false;
+        //}
+
+    }
+
+    void CheckForTransitionFromDefend()
+    {
+        if (bosshealth >= .9f)
+            {
+            if (shieldHealth == true)
+            {
+                
+                shieldCreate = false;
+                Destroy(shield);
+                state = AngelState.ATTACK;
+                ProcessAttackState();
+            }
+            else
+            {
+                state = AngelState.ATTACK;
+                ProcessAttackState();
+            }
+        }
+        else if (shieldHealth == false)
+        {
+            if(bosshealth >= .4f && bosshealth <= .9f)
+            {
+                state = AngelState.ATTACK;
+                ProcessAttackState();
+            }
+            else
+            {
+                state = AngelState.DESPERATE;
+                ProcessDesperateState();
+            }
         }
     }
 
@@ -124,6 +228,7 @@ public class angel : MonoBehaviour {
 
            speed = 6f;
 
+        
     }
 
     void CheckForTransitionFromDesperate()
@@ -191,7 +296,7 @@ public class angel : MonoBehaviour {
         }
         else if (state == AngelState.DESPERATE)
         {
-            if (shootchance > 50)
+            if (shootchance > 30)
             {
                 Instantiate(slash, body.position, Quaternion.Euler(new Vector3(0, 0, 0)));
             }
@@ -202,10 +307,11 @@ public class angel : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Bullet (Clone)")
         {
-            health--;
+            bosshealth -= 0.01f;
             Destroy(collision.gameObject);
-            if (health <= 0)
+            if (bosshealth <= 0)
             {
+                Instantiate(explosion, body.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                 enemySpawner.time = 0;
                 Destroy(gameObject);
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bossGuard : MonoBehaviour {
 
-    private int health;
+    private int health = 20;
 
     GameObject target;
     Vector2 moveDirection;
@@ -13,7 +13,7 @@ public class bossGuard : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        health = 50;
+        health = 20;
     }
 
     // Update is called once per frame

@@ -15,7 +15,7 @@ public class RepeatControlData
 }
 public class movePattern : MonoBehaviour {
 
-    private RepeatControlData[] pattern, pattern2, pattern3, pattern4;
+    private RepeatControlData[] pattern, pattern2, pattern3, pattern4, pattern5;
     private int patternIndex = 0;
     private int repeatIndex = 0;
     private float horizontalSpeed;
@@ -45,6 +45,7 @@ public class movePattern : MonoBehaviour {
         pattern2 = new RepeatControlData[] {pdr, pdr};
         pattern3 = new RepeatControlData[] {pdr, pdl};
         pattern4 = new RepeatControlData[] {pdl, pdr};
+        pattern5 = new RepeatControlData[] { pdl, pdl };
 
         //Setting Health and Speed
         if (gameObject.tag == "drone")
@@ -112,25 +113,52 @@ public class movePattern : MonoBehaviour {
         }
         if (gameObject.tag == "wing")
         {
-            // Process the current instruction in our control data array
-            RepeatControlData cd = pattern2[patternIndex];
-            float deltaX = cd.moveX * horizontalSpeed * Time.deltaTime;
-            transform.position += new Vector3(deltaX, 0, 0);
-            // Increment the patternIndex so that we move to the next piece of pattern data
 
-            if (repeatIndex >= cd.repeat)
+            if (enemySpawner.time > 24)
             {
-                patternIndex++;
-                repeatIndex = 0;
+                // Process the current instruction in our control data array
+                RepeatControlData cd = pattern5[patternIndex];
+                float deltaX = cd.moveX * horizontalSpeed * Time.deltaTime;
+                transform.position += new Vector3(deltaX, 0, 0);
+                // Increment the patternIndex so that we move to the next piece of pattern data
+
+                if (repeatIndex >= cd.repeat)
+                {
+                    patternIndex++;
+                    repeatIndex = 0;
+                }
+                else
+                {
+                    repeatIndex++;
+                }
+                // Reset the patternIndex if we are at the end of the instruction array
+                if (patternIndex >= pattern2.Length)
+                {
+                    patternIndex = 0;
+                }
             }
             else
             {
-                repeatIndex++;
-            }
-            // Reset the patternIndex if we are at the end of the instruction array
-            if (patternIndex >= pattern2.Length)
-            {
-                patternIndex = 0;
+                // Process the current instruction in our control data array
+                RepeatControlData cd = pattern2[patternIndex];
+                float deltaX = cd.moveX * horizontalSpeed * Time.deltaTime;
+                transform.position += new Vector3(deltaX, 0, 0);
+                // Increment the patternIndex so that we move to the next piece of pattern data
+
+                if (repeatIndex >= cd.repeat)
+                {
+                    patternIndex++;
+                    repeatIndex = 0;
+                }
+                else
+                {
+                    repeatIndex++;
+                }
+                // Reset the patternIndex if we are at the end of the instruction array
+                if (patternIndex >= pattern2.Length)
+                {
+                    patternIndex = 0;
+                }
             }
         }
         if (gameObject.tag == "boss striker")

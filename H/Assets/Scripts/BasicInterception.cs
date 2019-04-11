@@ -70,10 +70,11 @@ public class BasicInterception : MonoBehaviour
             Vector3 delta = speedDelta * normalizedRangeToClose;
 
             // Tranform our enemy in the direction of our player
+            //transform.Translate(delta);
             transform.position += delta;
-            transform.up = -(target.transform.position - transform.position);
+            transform.up = -(predictedPosition - transform.position);
         }
-       
+
 
 
     }
