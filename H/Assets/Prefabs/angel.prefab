@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114957950029441540}
   m_Layer: 0
   m_Name: angel
-  m_TagString: Untagged
+  m_TagString: boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,6 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cb9ee3b6223084fa0724176caf4628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 20
 --- !u!114 &114877573933345466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -460,6 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cb9ee3b6223084fa0724176caf4628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 20
 --- !u!114 &114887704903930074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -494,7 +496,6 @@ MonoBehaviour:
   shield: {fileID: 1090541819762648, guid: 9c77f108637119f4ca2b18698b56cf13, type: 2}
   state: 0
   shieldCreate: 0
-  shieldHealth: 1
   explosion: {fileID: 1849847720102040, guid: abd6a6761d67d5849b9bfe54594f4340, type: 2}
   waypoints:
   - {fileID: 4528643165159648, guid: 11b3f9c83ea6fd147adece6d01d759c7, type: 2}

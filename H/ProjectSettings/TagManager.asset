@@ -14,6 +14,7 @@ TagManager:
   - crossL
   - crossR
   - slash
+  - boss
   layers:
   - Default
   - TransparentFX

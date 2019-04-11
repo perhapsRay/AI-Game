@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class bossGuard : MonoBehaviour {
 
-    private int health = 20;
+    public int health = 20;
 
     GameObject target;
     Vector2 moveDirection;
-
 
     // Use this for initialization
     void Start()

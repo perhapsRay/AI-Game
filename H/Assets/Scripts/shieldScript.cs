@@ -28,6 +28,7 @@ public class shieldScript : MonoBehaviour {
             if (shieldHP <= 0)
             {
                 Instantiate(explosion, body.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                angel.shieldHealth = false;
                 Destroy(gameObject);
             }
         }

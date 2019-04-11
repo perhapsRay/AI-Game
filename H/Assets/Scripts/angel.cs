@@ -12,7 +12,7 @@ public class angel : MonoBehaviour {
     public GameObject shield;
     public AngelState state = AngelState.IDLE;
     public bool shieldCreate = false;
-    public bool shieldHealth = true;
+    public static bool shieldHealth = true;
     public GameObject explosion;
 
     [SerializeField]
@@ -184,7 +184,6 @@ public class angel : MonoBehaviour {
             {
             if (shieldHealth == true)
             {
-                
                 shieldCreate = false;
                 Destroy(shield);
                 state = AngelState.ATTACK;
